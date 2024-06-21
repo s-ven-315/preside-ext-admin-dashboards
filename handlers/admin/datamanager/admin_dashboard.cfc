@@ -57,6 +57,12 @@ component extends="preside.system.base.AdminHandler" {
 					, adminUserGroups = { type="varchar", value=adminUserGroups, list=true }
 				  }
 			} );
+
+			ArrayAppend( args.selectFields, "owner_id"         );
+			ArrayAppend( args.selectFields, "view_groups_list" );
+			ArrayAppend( args.selectFields, "view_users_list"  );
+			ArrayAppend( args.selectFields, "edit_groups_list" );
+			ArrayAppend( args.selectFields, "edit_users_list"  );
 		}
 	}
 
@@ -89,6 +95,12 @@ component extends="preside.system.base.AdminHandler" {
 		QueryAddColumn( records, "canShare" , canShare  );
 		QueryAddColumn( records, "canDelete", canDelete );
 		QueryAddColumn( records, "canClone" , canClone  );
+
+		QueryDeleteColumn( records, "owner_id"         );
+		QueryDeleteColumn( records, "view_groups_list" );
+		QueryDeleteColumn( records, "view_users_list"  );
+		QueryDeleteColumn( records, "edit_groups_list" );
+		QueryDeleteColumn( records, "edit_users_list"  );
 	}
 
 	private array function getRecordActionsForGridListing( event, rc, prc, args={} ) {
