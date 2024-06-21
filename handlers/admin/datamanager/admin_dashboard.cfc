@@ -74,22 +74,21 @@ component extends="preside.system.base.AdminHandler" {
 		var canEditThis     = false;
 		var hasFullAccess   = dashboardService.hasFullAccess( adminUserId );
 
-
-		for( var r in records ){
-			canEditThis = prc.canEdit && ( r.owner_id == adminUserId || ( r.edit_access == "specific" && ( listFind( r.edit_users_list, adminUserId ) || _listFindOneOf( r.edit_groups_list, adminUserGroups ) ) ) );
+		for ( var r in records ) {
+			canEditThis = ( prc.canEdit ?: false ) && ( r.owner_id == adminUserId || ( r.edit_access == "specific" && ( listFind( r.edit_users_list, adminUserId ) || _listFindOneOf( r.edit_groups_list, adminUserGroups ) ) ) );
 			canViewThis = canEditThis || r.view_access == "public" || ( r.view_access == "specific" && ( listFind( r.view_users_list, adminUserId ) || _listFindOneOf( r.view_groups_list, adminUserGroups ) ) )
 			ArrayAppend( canEdit  , hasFullAccess || canEditThis );
 			ArrayAppend( canView  , hasFullAccess || canViewThis );
 			ArrayAppend( canShare , hasFullAccess || r.owner_id == adminUserId );
-			ArrayAppend( canDelete, hasFullAccess || ( prc.canDelete && r.owner_id == adminUserId ) );
-			ArrayAppend( canClone , hasFullAccess || ( prc.canClone && canViewThis ) );
+			ArrayAppend( canDelete, hasFullAccess || ( ( prc.canDelete ?: false ) && r.owner_id == adminUserId ) );
+			ArrayAppend( canClone , hasFullAccess || ( ( prc.canClone  ?: false ) && canViewThis ) );
 		}
 
-		QueryAddColumn( records, "canView", canView );
-		QueryAddColumn( records, "canEdit", canEdit );
-		QueryAddColumn( records, "canShare", canShare );
+		QueryAddColumn( records, "canView"  , canView   );
+		QueryAddColumn( records, "canEdit"  , canEdit   );
+		QueryAddColumn( records, "canShare" , canShare  );
 		QueryAddColumn( records, "canDelete", canDelete );
-		QueryAddColumn( records, "canClone", canClone );
+		QueryAddColumn( records, "canClone" , canClone  );
 	}
 
 	private array function getRecordActionsForGridListing( event, rc, prc, args={} ) {
