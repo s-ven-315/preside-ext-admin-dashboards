@@ -1,9 +1,13 @@
 # Changelog
 
+## v3.0.7
+
+* Fix i18n on audit trail for permission sharing activity
+
 ## v3.0.6
 
-* [DASH-26](https://projects.pixl8.london/browse/DASH-26) - (p1) There is no Granular permissions for Admin Dashboards
-* [DASH-27](https://projects.pixl8.london/browse/DASH-27) - (p1) Infinite load on keyword search on admin dashboard list
+* Fix lack of granular permissions for Admin Dashboards
+* Fix infinite load on keyword search on admin dashboard list
 
 ## v3.0.5
 
